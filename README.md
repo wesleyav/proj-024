@@ -62,6 +62,8 @@ UpdateDTO - representa somente os dados que podem ser atualizados pelo usuário.
 
 ## Diagrama de classes
 
+![](docs/diagrama-de-classes-com-relacionamentos.png)
+
 ### Address
 
 ![](docs/diagrama-de-classes-address.png)
@@ -108,6 +110,9 @@ UpdateDTO - representa somente os dados que podem ser atualizados pelo usuário.
 
 ## Requisições Json
 [Link](docs/requisicoes-json.md)
+
+## Coleção no Postman
+[Link](docs/proj-024.postman_collection.json)
 
 ## SQL para simulação
 
