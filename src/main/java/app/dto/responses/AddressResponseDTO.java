@@ -6,6 +6,8 @@ import app.entities.Address;
 
 public class AddressResponseDTO {
 
+	private Long addressId;
+
 	private String address;
 
 	private String address2;
@@ -19,12 +21,17 @@ public class AddressResponseDTO {
 	private Instant lastUpdate;
 
 	public AddressResponseDTO(Address address) {
+		this.addressId = address.getAddressId();
 		this.address = address.getAddress();
 		this.address2 = address.getAddress2();
 		this.district = address.getDistrict();
 		this.postalCode = address.getPostalCode();
 		this.phone = address.getPhone();
 		this.lastUpdate = address.getLastUpdate();
+	}
+
+	public Long getAddressId() {
+		return addressId;
 	}
 
 	public String getAddress() {
