@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -42,6 +44,10 @@ public class Address implements Serializable {
 
 	@Column(name = "last_update", nullable = false)
 	private Instant lastUpdate;
+
+	@ManyToOne
+	@JoinColumn(name = "city_id", nullable = false)
+	private City cityId;
 
 	public Address() {
 	}
@@ -111,6 +117,14 @@ public class Address implements Serializable {
 
 	public void setLastUpdate(Instant lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+
+	public City getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(City cityId) {
+		this.cityId = cityId;
 	}
 
 	@Override
