@@ -14,6 +14,8 @@ public class AddressRequestDTO {
 
 	private String phone;
 
+	private CityRequestDTO cityId;
+
 	public String getAddress() {
 		return address;
 	}
@@ -54,6 +56,14 @@ public class AddressRequestDTO {
 		this.phone = phone;
 	}
 
+	public CityRequestDTO getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(CityRequestDTO cityId) {
+		this.cityId = cityId;
+	}
+
 	public Address convertToDTO(AddressRequestDTO dto) {
 		Address address = new Address();
 
@@ -62,6 +72,7 @@ public class AddressRequestDTO {
 		address.setDistrict(dto.getDistrict());
 		address.setPostalCode(dto.getPostalCode());
 		address.setPhone(dto.getPhone());
+		address.setCityId(CityRequestDTO.convertToDTO(getCityId()));
 
 		return address;
 	}
