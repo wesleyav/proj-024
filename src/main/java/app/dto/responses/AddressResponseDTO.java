@@ -20,6 +20,8 @@ public class AddressResponseDTO {
 
 	private Instant lastUpdate;
 
+	private CityResponseDTO city;
+
 	public AddressResponseDTO(Address address) {
 		this.addressId = address.getAddressId();
 		this.address = address.getAddress();
@@ -28,6 +30,8 @@ public class AddressResponseDTO {
 		this.postalCode = address.getPostalCode();
 		this.phone = address.getPhone();
 		this.lastUpdate = address.getLastUpdate();
+		this.city = new CityResponseDTO(address.getCityId());
+
 	}
 
 	public Long getAddressId() {
@@ -56,6 +60,10 @@ public class AddressResponseDTO {
 
 	public Instant getLastUpdate() {
 		return lastUpdate;
+	}
+
+	public CityResponseDTO getCity() {
+		return city;
 	}
 
 }
