@@ -10,7 +10,37 @@ Uma classe DTO (Data Transfer Object) em Java é frequentemente usada em APIs pa
 4. **Reduzir acoplamento**: Usar uma classe DTO ajuda a reduzir o acoplamento entre o cliente e o servidor. O cliente não precisa saber como os objetos de domínio são estruturados internamente, apenas precisa conhecer a estrutura dos DTOs. Isso facilita a manutenção e a evolução da API.
 5. **Validação**: Uma classe DTO também pode ser usada para validar os dados da requisição antes de processá-los. Isso ajuda a garantir que os dados recebidos sejam consistentes e válidos antes de serem utilizados pelo servidor.
 
-Este projeto é uma implementação simples de uma API REST com o intuito de entender melhor o funcionamento de classes DTO. Essa API oferece funcionalidades de consulta e manipulação de dados baseado em uma classe fictícia denominada `address`.
+Este projeto é uma implementação simples de uma API REST com o intuito de entender melhor o funcionamento de classes DTO. Essa API oferece funcionalidades de consulta e manipulação de dados baseado em classe fictícias denominadas `address`, `city` e `country`.
+
+### Tabela Address
+
+| Propriedade | Tipo de dado |
+| :---------- | :----------- |
+| addressId   | Long         |
+| address     | String       |
+| address2    | String       |
+| district    | String       |
+| postalCode  | String       |
+| phone       | String       |
+| lastUpdate  | Instant      |
+| cityId      | City         |
+
+### Tabela City
+
+| Propriedade | Tipo de dado |
+| :---------- | :----------- |
+| cityId      | Long         |
+| name        | String       |
+| lastUpdate  | Instant      |
+| countryId   | Country      |
+
+### Tabela Country
+
+| Propriedade | Tipo de dado |
+| :---------- | :----------- |
+| countryId   | Long         |
+| name        | String       |
+| lastUpdate  | Instant      |
 
 ## Planejamento das classes
 
@@ -21,81 +51,68 @@ UpdateDTO - representa somente os dados que podem ser atualizados pelo usuário.
 
 | Address    | AddressRequestDTO | AddressResponseDTO | AddressUpdateDTO |
 | :--------- | :---------------- | :----------------- | :--------------- |
-| addressId  |                   |                    |                  |
+| addressId  |                   | addressId          |                  |
 | address    | address           | address            | address          |
 | address2   | address2          | address2           | address2         |
 | district   | district          | district           | district         |
 | postalCode | postalCode        | postalCode         |                  |
 | phone      | phone             | phone              | phone            |
 | lastUpdate |                   | lastUpdate         |                  |
+| cityId     |                   | cityId             |                  |
 
 ## Diagrama de classes
 
-![](docs/diagrama-de-classes.png)
+### Address
+
+![](docs/diagrama-de-classes-address.png)
+
+### City
+
+![](docs/diagrama-de-classes-city.png)
+
+### Country
+
+![](docs/diagrama-de-classes-country.png)
 
 ## Endpoints
 
+### Country
+
+| Método HTTP | Prefixo | Endpoint     | Descrição                                            |
+| ----------- | ------- | ------------ | ---------------------------------------------------- |
+| POST        | /api/v1 | /countries   | Cria um novo país.                                   |
+| GET         | /api/v1 | /countries/1 | Retorna o país com o id 1.                           |
+| GET         | /api/v1 | /countries   | Recupera uma lista paginada de todos os países.      |
+| PUT         | /api/v1 | /countries/1 | Atualiza o país com o id 1.                          |
+| DELETE      | /api/v1 | /countries/1 | Remove o país com o id 1 (inclusive cidades filhas). |
+
+### City
+
+| Método HTTP | Prefixo | Endpoint  | Descrição                                        |
+| ----------- | ------- | --------- | ------------------------------------------------ |
+| POST        | /api/v1 | /cities   | Cria uma nova cidade com país.                   |
+| GET         | /api/v1 | /cities/1 | Retorna a cidade com o id 1.                     |
+| GET         | /api/v1 | /cities   | Recupera uma lista paginada de todos as cidades. |
+| PUT         | /api/v1 | /cities/1 | Atualiza a cidade com o id 1.                    |
+| DELETE      | /api/v1 | /cities/1 | Remove a cidade com o id 1.                      |
+
 ### Address
 
-| Método HTTP | Prefixo | Endpoint                 | Descrição                                                   |
-| ----------- | ------- | ------------------------ | ----------------------------------------------------------- |
-| GET         | /api/v1 | /addresses               | Retorna uma lista de addresses                              |
-| GET         | /api/v1 | /addresses-with-response | Retorna uma lista de addresses com o response personalizado |
-| GET         | /api/v1 | /addresses/1             | Retorna o address com o id 1                                |
-| POST        | /api/v1 | /addresses               | Cria um address                                             |
-| PUT         | /api/v1 | /addresses/1             | Atualiza o address de id 1                                  |
-| DELETE      | /api/v1 | /addresses/1             | Remove o address com o id 1                                 |
+| Método HTTP | Prefixo | Endpoint     | Descrição                                          |
+| ----------- | ------- | ------------ | -------------------------------------------------- |
+| POST        | /api/v1 | /addresses   | Cria um novo endereço.                             |
+| GET         | /api/v1 | /addresses/1 | Retorna o endereço com o id 1.                     |
+| GET         | /api/v1 | /addresses   | Recupera uma lista paginada de todos os endereços. |
+| PUT         | /api/v1 | /addresses/1 | Atualiza o endereço de id 1.                       |
+| DELETE      | /api/v1 | /addresses/1 | Remove o endereço com o id 1.                      |
 
-POST - `api/v1/addresses`
+## Requisições Json
+[Link](docs/requisicoes-json.md)
 
-```json
-{
-    "address": "address",
-    "address2": "address2",
-    "district": "district",
-    "postalCode": "postalCode",
-    "phone": "phone"
-}
-```
+## SQL para simulação
 
-GET - `api/v1/addresses`
+Opcionalmente pode-se inserir os dados nas tabelas via script sql, criando um arquivo na pasta resources:
 
-```json
-[
-    {
-        "addressId": 1,
-        "address": "address",
-        "address2": "address2",
-        "district": "district",
-        "postalCode": "postalCode",
-        "phone": "phone",
-        "lastUpdate": "2023-09-07T02:08:45.280904Z"
-    }
-]
-```
+![](docs/print-resources.png)
 
-GET - `addresses-with-response`
-
-```json
-[
-    {
-        "address": "address",
-        "address2": "address2",
-        "district": "district",
-        "postalCode": "postalCode",
-        "phone": "phone",
-        "lastUpdate": "2023-09-07T02:08:45.280904Z"
-    }
-]
-```
-
-PUT - `addresses/1`
-
-```json
-{
-    "address": "atualizado",
-    "address2": "atualizado",
-    "district": "atualizado",
-    "phone": "atualizado"
-}
-```
+[Link](docs/script.sql)
